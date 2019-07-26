@@ -1,0 +1,18 @@
+.step_container {
+    max-width: 800px;
+}
+
+.client_form {
+    max-width: 600px;
+    text-align: left;
+
+    margin-top: 35px;
+}
+
+.register_client {
+    margin: 50px 120px;
+}
+
+.input_container {
+    margin-top: 20px;
+}
