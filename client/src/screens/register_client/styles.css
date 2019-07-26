@@ -1,5 +1,6 @@
 .step_container {
-    max-width: 800px;
+    max-width: 700px;
+    text-align: left;
 }
 
 .client_form {
@@ -15,4 +16,8 @@
 
 .input_container {
     margin-top: 20px;
+}
+
+.register_top {
+    max-width: 600px;
 }

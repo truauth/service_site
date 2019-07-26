@@ -14,6 +14,12 @@ const reducer = (state, { type, payload }) => {
                 step: state.step + 1,
             }
         }
+        case ActionType.SET_LOADING: {
+            return {
+                ...state,
+                loading: payload
+            }
+        }
         default : {
             return state;
         }

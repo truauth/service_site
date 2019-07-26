@@ -5,6 +5,8 @@ export const updateField = (dispatch, target) => {
 }
 
 export const submitStep = (dispatch, state) => {
+    dispatch({ type: ActionType.SET_LOADING, payload: true })
+
     switch (state.step) {
         case 0: {
             // valid fields
@@ -21,4 +23,6 @@ export const submitStep = (dispatch, state) => {
             break;
         }
     }
+
+    dispatch({ type: ActionType.SET_LOADING, payload: false })
 }
