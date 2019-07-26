@@ -10,4 +10,4 @@ def create_identity():
     id_type = get_identity_type(request.url_rule.rule)
     
     # put the request here for the register
-    return `{ "created": true }`
+    return '{ "created": true }'
