@@ -10,31 +10,36 @@ export const updateField = (...args) => BaseRegister.updateField(...args)
 export const submitStep = async (dispatch, state) => {
     switch (state.step) {
         case 0: {
-            BaseRegister.submitStep(dispatch, state, async () => validateUserCreds(state.fields))
+            BaseRegister.submitStep(dispatch, state, async () => validateUserCreds(state))
             break;
         }
         case 1: {
-            BaseRegister.submitStep(dispatch, state, async () => validateAccountDetails(state.fields))
+            BaseRegister.submitStep(dispatch, state, async () => validateAccountDetails(state))
+            break;
+        }
+        case 2: {
+            // api call
+            console.log('api call', state.fields)
             break;
         }
         default: {
-            alert('done!')
             break;
         }
     }
 }
 
-export const validateUserCreds = async ({ username, email, password }) => {
+export const validateUserCreds = async ({error, fields: { username, email, password }}) => {
     const empty = createEmptyAntValidationObj();
 
-    const error = {
+    const updatedError = {
+        ...error,
         password: !UserValidation.validatePassword(password) ? createAntValidationObj('error', 'Invalid Password, the password that you choose should be greater 8 charactes, less than 16, contain at least 1 symbol and number.') : empty,
         email: !UserValidation.validateEmail(email) ? createAntValidationObj('error', 'Should be a valid email') : empty,
         username: !UserValidation.validateUsername(username) ? createAntValidationObj('error', 'This username is invalid or already taken, please try another.') : empty,
     }
 
     return {
-        error, 
+        updatedError, 
         valid: Object.values(error).reduce((prev, current) => {
             const isPrevValid = prev === true || isEqual(prev, empty)
 
@@ -43,8 +48,9 @@ export const validateUserCreds = async ({ username, email, password }) => {
     };
 }
 
-export const validateAccountDetails = async () => {
+export const validateAccountDetails = async (state) => {
     return { // TODO:
         valid: true,
+        error: {...state.error},
     }
 }
