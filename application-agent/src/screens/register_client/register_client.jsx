@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 
 import { Typography, Button } from 'antd';
 import { createEmptyAntValidationObj } from 'antd-fv';
@@ -12,7 +12,7 @@ import { updateField, submitStep } from '../../actions/register_user';
 
 import './styles.css';
 
-export default () => {
+export default ({ history }) => {
     const [state, dispatch] = useReducer(RegisterReducer, {
         ...RegisterReducer.INITIAL_STATE,
         error: {
@@ -21,7 +21,15 @@ export default () => {
             email: createEmptyAntValidationObj(),
         },
         fields: { username: "", password: "", email: "", isDeveloper: false }
-    })
+    });
+
+    const handleClick = useCallback(() => {
+        if (state.step === 2) {
+            history.push('/')
+        } else {
+            submitStep(dispatch, state)
+        }
+    }, [state, history])
 
     return (
         <main className="register_client">
@@ -35,15 +43,14 @@ export default () => {
 
             <div className="client_form">
                 <VariantControl loading={state.loading} error={state.error} step={state.step} onChange={(target) => updateField(dispatch, target)} />
-
                 {
                     <Button
-                        onClick={() => submitStep(dispatch, state)}
+                        onClick={handleClick}
                         type="primary"
                         style={{ marginTop: 30 }}
                     >
                         {
-                            state.step === 0 ? "Next" : "Create Account"
+                            state.step !== 2 ? "Next" : "Finish"
                         }
                     </Button>
                 }
