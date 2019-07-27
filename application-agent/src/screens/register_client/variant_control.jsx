@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RegisterClient, RegisterUser } from '../../components/forms';
+import { AccountSettings, RegisterUser } from '../../components/forms';
 
 
 export default (props) => {
@@ -12,7 +12,11 @@ export default (props) => {
             )
         case 1: 
             return (
-                <RegisterClient {...props} />
+                <AccountSettings {...props} />
+            )
+        case 2: 
+            return (
+                "review"
             )
         default: {
             console.error(`Error: Variant Control: Invalid Step Value`)
