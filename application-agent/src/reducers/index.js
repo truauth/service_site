@@ -1,1 +1,1 @@
-export { default as RegisterClient } from './register_client';
+export { default as Register } from './register';
