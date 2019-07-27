@@ -15,7 +15,6 @@ const reducer = (state, { type, payload }) => {
             return {
                 ...state,
                 step: state.step + 1,
-                error: {},
             }
         }
         case ActionType.SET_LOADING: {
