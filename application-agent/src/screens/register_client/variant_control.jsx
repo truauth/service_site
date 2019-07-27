@@ -1,12 +1,18 @@
 import React from 'react';
 
-import { RegisterClient as RegisterClientForm } from '../../components/forms';
+import { RegisterClient, RegisterUser } from '../../components/forms';
+
 
 export default (props) => {
     switch(props.step) {
-        case 0: 
+        case 0:
             return (
-                <RegisterClientForm {...props} />
+                <RegisterUser {...props} />
+               
+            )
+        case 1: 
+            return (
+                <RegisterClient {...props} />
             )
         default: {
             console.error(`Error: Variant Control: Invalid Step Value`)
