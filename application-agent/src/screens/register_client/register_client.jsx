@@ -1,18 +1,27 @@
 import React, { useReducer } from 'react';
 
 import { Typography, Button } from 'antd';
+import { createEmptyAntValidationObj } from 'antd-fv';
 
-import { RegisterClient as RegisterClientReducer } from '../../reducers';
+import { Register as RegisterReducer } from '../../reducers';
 
 import RegisterClientSteps from '../../components/register_client_steps';
 import VariantControl from './variant_control';
 
-import { updateField, submitStep } from '../../actions/register';
+import { updateField, submitStep } from '../../actions/register_user';
 
 import './styles.css';
 
 export default () => {
-    const [state, dispatch] = useReducer(RegisterClientReducer, RegisterClientReducer.INITIAL_STATE)
+    const [state, dispatch] = useReducer(RegisterReducer, {
+        ...RegisterReducer.INITIAL_STATE,
+        error: {
+            username: createEmptyAntValidationObj(),
+            password: createEmptyAntValidationObj(),
+            email: createEmptyAntValidationObj()
+        },
+        fields: { username: "", password: "", email: ""}
+    })
 
     return (
         <main className="register_client">
@@ -25,7 +34,7 @@ export default () => {
             </div>
 
             <div className="client_form">
-                <VariantControl step={state.step} onChange={(target) => updateField(dispatch, target)}/>
+                <VariantControl loading={state.loading} error={state.error} step={state.step} onChange={(target) => updateField(dispatch, target)}/>
                 <Button
                     onClick={() => submitStep(dispatch, state)}
                     type="primary"
