@@ -10,16 +10,15 @@ export const updateField = (...args) => BaseRegister.updateField(...args)
 export const submitStep = async (dispatch, state) => {
     switch (state.step) {
         case 0: {
-            BaseRegister.submitStep(dispatch, state, async () => validateUserCreds(state))
+            await BaseRegister.submitStep(dispatch, () => validateUserCreds(state))
             break;
         }
         case 1: {
-            BaseRegister.submitStep(dispatch, state, async () => validateAccountDetails(state))
-            break;
-        }
-        case 2: {
-            // api call
-            console.log('api call', state.fields)
+            const secondaryOperation = async () => console.log('api call', state.fields)
+            // TODO: when this resolves, it should popuplate the finish state object (need to create).
+
+            await BaseRegister.submitStep(dispatch, () => validateAccountDetails(state), secondaryOperation)
+
             break;
         }
         default: {
@@ -28,7 +27,7 @@ export const submitStep = async (dispatch, state) => {
     }
 }
 
-export const validateUserCreds = async ({error, fields: { username, email, password }}) => {
+export const validateUserCreds = async ({ error, fields: { username, email, password } }) => {
     const empty = createEmptyAntValidationObj();
 
     const updatedError = {
@@ -39,7 +38,7 @@ export const validateUserCreds = async ({error, fields: { username, email, passw
     }
 
     return {
-        updatedError, 
+        updatedError,
         valid: Object.values(error).reduce((prev, current) => {
             const isPrevValid = prev === true || isEqual(prev, empty)
 
@@ -51,6 +50,6 @@ export const validateUserCreds = async ({error, fields: { username, email, passw
 export const validateAccountDetails = async (state) => {
     return { // TODO:
         valid: true,
-        error: {...state.error},
+        error: { ...state.error },
     }
 }
