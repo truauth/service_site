@@ -18,9 +18,9 @@ export default () => {
         error: {
             username: createEmptyAntValidationObj(),
             password: createEmptyAntValidationObj(),
-            email: createEmptyAntValidationObj()
+            email: createEmptyAntValidationObj(),
         },
-        fields: { username: "", password: "", email: ""}
+        fields: { username: "", password: "", email: "", isDeveloper: false }
     })
 
     return (
@@ -30,20 +30,23 @@ export default () => {
             </div>
 
             <div className="step_container">
-                <RegisterClientSteps current={state.step} loading={state.loading}/>
+                <RegisterClientSteps current={state.step} loading={state.loading} />
             </div>
 
             <div className="client_form">
-                <VariantControl loading={state.loading} error={state.error} step={state.step} onChange={(target) => updateField(dispatch, target)}/>
-                <Button
-                    onClick={() => submitStep(dispatch, state)}
-                    type="primary"
-                    style={{ marginTop: 30}}
-                >
-                    {
-                        state.state === 0 ? "Next" :  "Create Account"
-                    }
-                </Button>
+                <VariantControl loading={state.loading} error={state.error} step={state.step} onChange={(target) => updateField(dispatch, target)} />
+
+                {
+                    <Button
+                        onClick={() => submitStep(dispatch, state)}
+                        type="primary"
+                        style={{ marginTop: 30 }}
+                    >
+                        {
+                            state.step === 0 ? "Next" : "Create Account"
+                        }
+                    </Button>
+                }
             </div>
         </main>
     )
