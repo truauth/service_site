@@ -13,15 +13,23 @@ import { updateField, submitStep } from '../../actions/register_user';
 import './styles.css';
 
 export default ({ history }) => {
-    const [state, dispatch] = useReducer(RegisterReducer, {
+    const lsData = JSON.parse(localStorage.getItem('_register-user'));
+
+    const username = typeof lsData !== 'undefined' ? lsData.username : "";
+    const password = typeof lsData !== 'undefined' ? lsData.password : "";
+    const email = typeof lsData !== 'undefined' ? lsData.email : "";
+
+    const initialState = {
         ...RegisterReducer.INITIAL_STATE,
         error: {
             username: createEmptyAntValidationObj(),
             password: createEmptyAntValidationObj(),
             email: createEmptyAntValidationObj(),
         },
-        fields: { username: "", password: "", email: "", isDeveloper: false }
-    });
+        fields: { username, password, email, isDeveloper: false }
+    };
+
+    const [state, dispatch] = useReducer(RegisterReducer, initialState);
 
     const handleClick = useCallback(() => {
         if (state.step === 2) {
@@ -42,18 +50,22 @@ export default ({ history }) => {
             </div>
 
             <div className="client_form">
-                <VariantControl loading={state.loading} error={state.error} step={state.step} onChange={(target) => updateField(dispatch, target)} />
-                {
-                    <Button
-                        onClick={handleClick}
-                        type="primary"
-                        style={{ marginTop: 30 }}
-                    >
-                        {
-                            state.step !== 2 ? "Next" : "Finish"
-                        }
-                    </Button>
-                }
+                <VariantControl
+                    fieldValues={state.fields}
+                    loading={state.loading}
+                    error={state.error}
+                    step={state.step}
+                    onChange={(target) => updateField(dispatch, target)}
+                />
+                <Button
+                    onClick={handleClick}
+                    type="primary"
+                    style={{ marginTop: 30 }}
+                >
+                    {
+                        state.step !== 2 ? "Next" : "Finish"
+                    }
+                </Button>
             </div>
         </main>
     )
