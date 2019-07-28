@@ -2,7 +2,9 @@ import React, { useCallback } from 'react';
 
 import { Input, Typography, Form } from 'antd';
 
-export default ({ onChange, error, loading }) => {
+const fieldDefault = { username: "", email: "", password: "" }
+
+export default ({ fieldValues = fieldDefault, onChange, error = fieldDefault, loading }) => {
     const onFieldChange = useCallback(({ target }) => {
         onChange(target)
     }, [onChange]);
@@ -20,7 +22,7 @@ export default ({ onChange, error, loading }) => {
                         help={error['username'].help}
                     >
                         <Typography.Text strong>Username</Typography.Text>
-                        <Input id="username" onChange={onFieldChange} />
+                        <Input value={fieldValues.username} id="username" onChange={onFieldChange} />
                     </Form.Item>
                 </div>
                 <div className="input_container">
@@ -29,7 +31,7 @@ export default ({ onChange, error, loading }) => {
                         help={error['email'].help}
                     >
                         <Typography.Text strong>Email Address</Typography.Text>
-                        <Input id="email" onChange={onFieldChange} />
+                        <Input value={fieldValues.email} id="email" onChange={onFieldChange} />
                     </Form.Item>
                 </div>
                 <div className="input_container">
@@ -38,7 +40,7 @@ export default ({ onChange, error, loading }) => {
                         help={error['password'].help}
                     >
                         <Typography.Text strong>Password</Typography.Text>
-                        <Input.Password id="password" onChange={onFieldChange} />
+                        <Input.Password value={fieldValues.password} id="password" onChange={onFieldChange} />
                     </Form.Item>
                 </div>
             </div>
