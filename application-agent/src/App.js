@@ -12,8 +12,7 @@ function App() {
     <div className="App">
       <Rotuer>
         <Route exact path="/" component={Screen.Home}/>
-        <Route exact path="/register_client" component={Screen.RegiserClient} />
-        <Route exact path="/register_user" component={Screen.RegisterUser} />
+        <Route exact path="/register/user" component={Screen.RegisterUser} />
       </Rotuer> 
     </div>
   );
