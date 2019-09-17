@@ -1,4 +1,5 @@
 import React, { useReducer, useCallback } from 'react';
+import { withRouter } from "react-router-dom";
 
 import { Typography, Button } from 'antd';
 import { createEmptyAntValidationObj } from 'antd-fv';
@@ -12,12 +13,11 @@ import { updateField, submitStep } from '../../actions/register_user';
 
 import './styles.css';
 
-export default ({ history }) => {
+export default withRouter(({ history }) => {
     const lsData = JSON.parse(localStorage.getItem('_register-user'));
 
-    const username = typeof lsData !== 'undefined' ? lsData.username : "";
-    const password = typeof lsData !== 'undefined' ? lsData.password : "";
-    const email = typeof lsData !== 'undefined' ? lsData.email : "";
+    const { username="", password="", email="" } = lsData;
+
 
     const initialState = {
         ...RegisterReducer.INITIAL_STATE,
@@ -69,4 +69,4 @@ export default ({ history }) => {
             </div>
         </main>
     )
-}
+});

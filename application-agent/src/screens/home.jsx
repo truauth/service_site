@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import { withRouter } from "react-router-dom";
 
 import { Col, Row, Card, Typography, Button } from 'antd';
 import { RegisterUser } from '../components/forms';
 
-export default ({ history }) => {
+export default withRouter(({ history }) => {
     const [fields, setFields] = useState();
     const onFormChange = useCallback(({ id, value }) => {
         setFields({
@@ -14,7 +15,6 @@ export default ({ history }) => {
 
     const handleSubmit = useCallback(() => {
         localStorage.setItem('_register-user', JSON.stringify(fields))
-
         history.push('/register/user')
     }, [fields, history]);
 
@@ -38,4 +38,4 @@ export default ({ history }) => {
             </Col>
         </Row>
     )
-}
+});
